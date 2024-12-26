@@ -1,0 +1,55 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+struct Candidate {
+    string name;
+    int votes;
+};
+
+void displayMenu(const vector<Candidate>& candidates) {
+    cout << "\nVoting Menu:\n";
+    for (size_t i = 0; i < candidates.size(); i++) {
+        cout << i + 1 << ". " << candidates[i].name << endl;
+    }
+    cout << candidates.size() + 1 << ". Exit\n";
+}
+
+void displayResults(const vector<Candidate>& candidates) {
+    cout << "\nVoting Results:\n";
+    for (const auto& candidate : candidates) {
+        cout << candidate.name << ": " << candidate.votes << " votes\n";
+    }
+}
+
+int main() {
+    vector<Candidate> candidates = {
+        {"Alice", 0},
+        {"Bob", 0},
+        {"Charlie", 0},
+        {"Diana", 0},
+        {"Eve", 0}
+    };
+
+    int choice;
+    while (true) {
+        displayMenu(candidates);
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        if (choice < 1 || choice > candidates.size() + 1) {
+            cout << "Invalid choice! Please try again.\n";
+        } else if (choice == candidates.size() + 1) {
+            break;
+        } else {
+            candidates[choice - 1].votes++;
+            cout << "Vote casted for " << candidates[choice - 1].name << "!\n";
+        }
+    }
+
+    displayResults(candidates);
+    cout << "Thank you for voting!\n";
+
+    return 0;
+}
